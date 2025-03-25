@@ -1,0 +1,9 @@
+{
+  "config.essentialinfo.title": "配置界面",
+  "config.essentialinfo.general": "通用",
+  "config.essentialinfo.showDamageBossBar": "伤害显示",
+  "config.essentialinfo.showDamageBossBar.comment": "启用或关闭",
+
+  "config.essentialinfo.displayDuration": "显示时长 (ms)",
+  "config.essentialinfo.displayDuration.comment": "BossBar显示时长"
+}

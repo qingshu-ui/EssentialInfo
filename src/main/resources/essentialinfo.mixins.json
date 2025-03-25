@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "me.qingshu.essentialinfo.mixins.minecraft",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "MixinLivingEntity"
+  ],
+  "client": [
+    "MixinBossBarHud",
+    "MixinMinecraftClient"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

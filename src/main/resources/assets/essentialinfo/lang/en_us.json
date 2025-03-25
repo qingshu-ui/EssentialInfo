@@ -1,0 +1,9 @@
+{
+  "config.essentialinfo.title": "EssentialInfo Config",
+  "config.essentialinfo.general": "General",
+  "config.essentialinfo.showDamageBossBar": "Show Damage Boss Bar",
+  "config.essentialinfo.showDamageBossBar.comment": "Description for showDamageBossBar",
+
+  "config.essentialinfo.displayDuration": "Display Duration (ms)",
+  "config.essentialinfo.displayDuration.comment": "Description for showDamageBossBar for Display Duration (ms)"
+}

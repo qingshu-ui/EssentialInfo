@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "id": "essentialinfo",
+  "version": "${version}",
+  "name": "EssentialInfo",
+  "description": "No description",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/essentialinfo/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "me.qingshu.essentialinfo.client.EssentialinfoClient"
+    ],
+    "main": [
+      "me.qingshu.essentialinfo.Essentialinfo"
+    ],
+    "modmenu": [
+      "me.qingshu.essentialinfo.integrations.ModMenuIntegration"
+    ]
+  },
+  "mixins": [
+    "essentialinfo.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric-language-kotlin": ">=${kotlin_loader_version}",
+    "minecraft": "${minecraft_version}"
+  },
+  "suggests": {
+    "modmenu": ">=${modmenu_version}",
+    "cloth-config": ">=${cloth_config_version}"
+  }
+}
