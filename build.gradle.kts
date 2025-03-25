@@ -9,17 +9,6 @@ plugins {
     id("com.diffplug.spotless") version "7.0.2"
 }
 
-spotless {
-    kotlin {
-        ktlint()
-    }
-
-    java {
-        importOrder()
-        removeUnusedImports()
-    }
-}
-
 version = project.property("mod_version") as String
 group = project.property("maven_group") as String
 

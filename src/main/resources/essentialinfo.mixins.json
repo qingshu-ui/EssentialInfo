@@ -8,7 +8,8 @@
   ],
   "client": [
     "MixinBossBarHud",
-    "MixinMinecraftClient"
+    "MixinMinecraftClient",
+    "MixinPlayerEntity"
   ],
   "injectors": {
     "defaultRequire": 1
