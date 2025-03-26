@@ -4,12 +4,11 @@
   "package": "me.qingshu.essentialinfo.mixins.minecraft",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "MixinLivingEntity"
   ],
   "client": [
     "MixinBossBarHud",
-    "MixinMinecraftClient",
-    "MixinPlayerEntity"
+    "MixinClientPlayerInteractionManager",
+    "MixinMinecraftClient"
   ],
   "injectors": {
     "defaultRequire": 1

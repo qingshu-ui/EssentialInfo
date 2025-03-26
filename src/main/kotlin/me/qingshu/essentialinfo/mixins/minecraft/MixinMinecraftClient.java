@@ -1,6 +1,7 @@
 package me.qingshu.essentialinfo.mixins.minecraft;
 
-import me.qingshu.essentialinfo.core.DamageTracker;
+import me.qingshu.essentialinfo.events.EventHandler;
+import me.qingshu.essentialinfo.events.world.TickEvent;
 import net.minecraft.client.MinecraftClient;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,6 +16,6 @@ public abstract class MixinMinecraftClient {
             at = @At("TAIL")
     )
     private void onTick(CallbackInfo ci){
-        DamageTracker.tick();
+        EventHandler.emit(TickEvent.INSTANCE);
     }
 }

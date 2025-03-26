@@ -1,6 +1,7 @@
 package me.qingshu.essentialinfo.client
 
 import me.qingshu.essentialinfo.Essentialinfo
+import me.qingshu.essentialinfo.core.PlayerAttackTracker
 import net.fabricmc.api.ClientModInitializer
 
 @Suppress("SpellCheckingInspection")
@@ -13,5 +14,6 @@ class EssentialinfoClient : ClientModInitializer {
     override fun onInitializeClient() {
         log.info("Mod client initial...")
         if (instance != null) instance = this
+        PlayerAttackTracker.init()
     }
 }

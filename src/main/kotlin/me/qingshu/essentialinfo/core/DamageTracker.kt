@@ -1,6 +1,8 @@
 package me.qingshu.essentialinfo.core
 
 import me.qingshu.essentialinfo.config.ModConfig
+import me.qingshu.essentialinfo.events.EventHandler
+import me.qingshu.essentialinfo.events.world.TickEvent
 import me.qingshu.essentialinfo.mixininterface.IBossBarHud
 import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.hud.ClientBossBar
@@ -10,6 +12,13 @@ import net.minecraft.text.Text
 import java.util.*
 
 object DamageTracker {
+
+    init {
+        EventHandler.on(TickEvent::class.java) {
+            tick()
+        }
+    }
+
     private var lastShowTime: Long = 0
     private val bossBar by lazy {
         ClientBossBar(
@@ -36,8 +45,7 @@ object DamageTracker {
         lastShowTime = System.currentTimeMillis()
     }
 
-    @JvmStatic
-    fun tick() {
+    private fun tick() {
         if (System.currentTimeMillis() - lastShowTime > ModConfig.displayDuration) {
             val bossBarHud = MinecraftClient.getInstance().inGameHud.bossBarHud as IBossBarHud
             bossBarHud.`essentialInfo$removeBossBar`(bossBar)

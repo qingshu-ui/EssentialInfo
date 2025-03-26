@@ -6,7 +6,6 @@ plugins {
     kotlin("plugin.serialization") version "2.1.20"
     id("fabric-loom") version "1.10-SNAPSHOT"
     id("maven-publish")
-    id("com.diffplug.spotless") version "7.0.2"
 }
 
 version = project.property("mod_version") as String
