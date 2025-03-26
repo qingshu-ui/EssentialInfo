@@ -60,10 +60,10 @@ object EventHandler {
     fun <T : Event> once(
         event: Class<T>, priority: ListenerPriority = ListenerPriority.NORMAL, action: (T) -> Unit
     ) {
-        var unregister: ListenerWrapper? = null
-        unregister = on(event, priority) {
+        lateinit var wrapper: ListenerWrapper
+        wrapper = on(event, priority) {
             action(this.event)
-            unregister?.off()
+            wrapper.off()
         }
     }
 }

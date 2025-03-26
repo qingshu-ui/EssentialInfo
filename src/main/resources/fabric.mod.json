@@ -4,7 +4,7 @@
   "version": "${version}",
   "name": "EssentialInfo",
   "description": "No description",
-  "authors": [],
+  "authors": ["lovelellter"],
   "contact": {},
   "license": "All-Rights-Reserved",
   "icon": "assets/essentialinfo/icon.png",
