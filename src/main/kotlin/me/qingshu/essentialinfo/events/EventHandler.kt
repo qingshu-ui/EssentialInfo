@@ -4,7 +4,7 @@ import me.qingshu.essentialinfo.Essentialinfo
 import java.util.*
 
 interface EventHandlerScope<T : Event> {
-    var event: T
+    val event: T
 }
 
 object EventHandler {
@@ -22,7 +22,7 @@ object EventHandler {
         val wrapper = ListenerWrapper(priority) { e ->
             object : EventHandlerScope<T> {
                 @Suppress("UNCHECKED_CAST")
-                override var event: T = e as T
+                override val event: T = e as T
             }.run(action)
         }.apply {
             unregister = { c.remove(this) }
