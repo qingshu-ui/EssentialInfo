@@ -9,6 +9,7 @@ import me.qingshu.essentialinfo.config.TransKey.KEY_DISPLAY_DURATION_COMMENT
 import me.qingshu.essentialinfo.config.TransKey.KEY_GENERAL
 import me.qingshu.essentialinfo.config.TransKey.KEY_SHOW_DAMAGE_BOSS_BAR
 import me.qingshu.essentialinfo.config.TransKey.KEY_SHOW_DAMAGE_BOSS_BAR_COMMENT
+import me.qingshu.essentialinfo.integrations.clothconfigext.build
 import me.shedaniel.clothconfig2.api.ConfigBuilder
 import net.fabricmc.loader.api.FabricLoader
 import net.minecraft.client.gui.screen.Screen
@@ -34,31 +35,42 @@ class ModMenuIntegration : ModMenuApi {
                 .setSavingRunnable {
                     ModConfig.save()
                 }
-        val entryBuilder = builder.entryBuilder()
-
-        val general = builder.getOrCreateCategory(Text.translatable(KEY_GENERAL))
-        general.addEntry(
-            entryBuilder
-                .startBooleanToggle(
-                    Text.translatable(KEY_SHOW_DAMAGE_BOSS_BAR),
-                    ModConfig.showDamageBossBar,
-                ).setDefaultValue(true)
-                .setTooltip(Text.translatable(KEY_SHOW_DAMAGE_BOSS_BAR_COMMENT))
-                .setSaveConsumer { newValue -> ModConfig.showDamageBossBar = newValue }
-                .build(),
-        )
-
-        general.addEntry(
-            entryBuilder
-                .startIntField(
-                    Text.translatable(KEY_DISPLAY_DURATION),
-                    ModConfig.displayDuration,
-                ).setDefaultValue(2000)
-                .setTooltip(Text.translatable(KEY_DISPLAY_DURATION_COMMENT))
-                .setSaveConsumer { newValue -> ModConfig.displayDuration = newValue }
-                .build(),
-        )
+        generalConfig(builder)
 
         return builder.build()
     }
+}
+
+private fun generalConfig(builder: ConfigBuilder) {
+    val general = builder.getOrCreateCategory(Text.translatable(KEY_GENERAL))
+    val entryBuilder = builder.entryBuilder()
+
+    general.addEntry(
+        entryBuilder
+            .startBooleanToggle(
+                Text.translatable(KEY_SHOW_DAMAGE_BOSS_BAR),
+                ModConfig.showDamageBossBar,
+            ).build {
+                setDefaultValue(true)
+                setTooltip(Text.translatable(KEY_SHOW_DAMAGE_BOSS_BAR_COMMENT))
+                setSaveConsumer { newValue -> ModConfig.showDamageBossBar = newValue }
+            }
+    )
+
+    general.addEntry(
+        entryBuilder.startIntField(
+            Text.translatable(KEY_DISPLAY_DURATION),
+            ModConfig.displayDuration,
+        ).build {
+            setDefaultValue(2000)
+            setTooltip(Text.translatable(KEY_DISPLAY_DURATION_COMMENT))
+            setSaveConsumer { newValue -> ModConfig.displayDuration = newValue }
+        }
+    )
+
+}
+
+private fun hotkeyConfig(builder: ConfigBuilder) {
+    val hotkey = builder.getOrCreateCategory(Text.translatable(""))
+    val entryBuilder = builder.entryBuilder()
 }
