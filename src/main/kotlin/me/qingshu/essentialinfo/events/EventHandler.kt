@@ -58,12 +58,13 @@ object EventHandler {
     @JvmStatic
     @JvmOverloads
     fun <T : Event> once(
-        event: Class<T>, priority: ListenerPriority = ListenerPriority.NORMAL, action: (T) -> Unit
-    ) {
+        event: Class<T>, priority: ListenerPriority = ListenerPriority.NORMAL, action: EventHandlerScope<T>.() -> Unit
+    ): ListenerWrapper {
         lateinit var wrapper: ListenerWrapper
         wrapper = on(event, priority) {
-            action(this.event)
+            action()
             wrapper.off()
         }
+        return wrapper
     }
 }

@@ -1,10 +1,10 @@
 package me.qingshu.essentialinfo.core
 
+import me.qingshu.essentialinfo.client.EssentialinfoClient.Companion.mc
 import me.qingshu.essentialinfo.config.ModConfig
-import me.qingshu.essentialinfo.events.EventHandler
+import me.qingshu.essentialinfo.events.on
 import me.qingshu.essentialinfo.events.world.TickEvent
 import me.qingshu.essentialinfo.mixininterface.IBossBarHud
-import net.minecraft.client.MinecraftClient
 import net.minecraft.client.gui.hud.ClientBossBar
 import net.minecraft.entity.LivingEntity
 import net.minecraft.entity.boss.BossBar
@@ -14,7 +14,7 @@ import java.util.*
 object DamageTracker {
 
     init {
-        EventHandler.on(TickEvent::class.java) {
+        TickEvent.on {
             tick()
         }
     }
@@ -40,14 +40,14 @@ object DamageTracker {
             name = Text.literal(String.format("- %.1f", damage))
             percent = healthPercent.coerceIn(0f, 1f)
         }
-        val bossBarHud = MinecraftClient.getInstance().inGameHud.bossBarHud as IBossBarHud
+        val bossBarHud = mc.inGameHud.bossBarHud as IBossBarHud
         bossBarHud.`essentialInfo$addBossBar`(bossBar)
         lastShowTime = System.currentTimeMillis()
     }
 
     private fun tick() {
         if (System.currentTimeMillis() - lastShowTime > ModConfig.displayDuration) {
-            val bossBarHud = MinecraftClient.getInstance().inGameHud.bossBarHud as IBossBarHud
+            val bossBarHud = mc.inGameHud.bossBarHud as IBossBarHud
             bossBarHud.`essentialInfo$removeBossBar`(bossBar)
         }
     }

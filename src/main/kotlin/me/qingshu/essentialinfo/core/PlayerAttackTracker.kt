@@ -2,8 +2,8 @@ package me.qingshu.essentialinfo.core
 
 import me.qingshu.essentialinfo.Essentialinfo
 import me.qingshu.essentialinfo.config.ModConfig
-import me.qingshu.essentialinfo.events.EventHandler
 import me.qingshu.essentialinfo.events.entity.player.AttackEntityEvent
+import me.qingshu.essentialinfo.events.on
 import me.qingshu.essentialinfo.events.world.TickEvent
 import net.minecraft.client.MinecraftClient
 import net.minecraft.entity.Entity
@@ -17,14 +17,14 @@ object PlayerAttackTracker {
     private val log = Essentialinfo.logger
 
     fun init() {
-        EventHandler.on(AttackEntityEvent::class.java) {
+        AttackEntityEvent.on {
             val entity: Entity = event.entity ?: return@on
             if (entity is LivingEntity) {
                 recordAttack(entity)
             }
         }
 
-        EventHandler.on(TickEvent::class.java) {
+        TickEvent.on {
             if (!ModConfig.showDamageBossBar) return@on
             val world = mc.world ?: return@on
             val entity = world.getEntityById(lastAttackedEntity) as? LivingEntity
