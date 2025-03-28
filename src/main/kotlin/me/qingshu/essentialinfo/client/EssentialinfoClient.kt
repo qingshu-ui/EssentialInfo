@@ -6,6 +6,7 @@ import me.qingshu.essentialinfo.core.PlayerAttackTracker
 import me.qingshu.essentialinfo.events.game.KeyEvent
 import me.qingshu.essentialinfo.events.on
 import me.qingshu.essentialinfo.integrations.ModMenuIntegration.Companion.buildClothConfig
+import me.qingshu.essentialinfo.utils.KeyboardUtils
 import net.fabricmc.api.ClientModInitializer
 import net.minecraft.client.MinecraftClient
 
@@ -23,11 +24,12 @@ class EssentialinfoClient : ClientModInitializer {
         log.info("Mod client initial...")
         if (instance != null) instance = this
         PlayerAttackTracker.init()
+        KeyboardUtils.init()
 
         KeyEvent.on {
-            if (event.key == ModConfig.openGUI &&
-                mc.currentScreen == null &&
-                event.action == KeyEvent.KeyAction.Press
+            if (ModConfig.openGUI != -1 &&
+                KeyboardUtils.isKeyPressed(ModConfig.openGUI) &&
+                mc.currentScreen == null
             ) {
                 mc.setScreen(buildClothConfig(mc.currentScreen))
             }

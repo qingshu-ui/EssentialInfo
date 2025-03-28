@@ -30,20 +30,19 @@ sourceSets {
 }
 
 spotless {
+
     format("miss") {
         target("*.gradle.kts", ".gitattributes", ".gitignore", "*.properties")
         trimTrailingWhitespace()
         leadingTabsToSpaces()
         endWithNewline()
         replaceRegex("Add spaces around = ", """(\w)\s*=\s*(\w)""", "$1 = $2")
-        isEnforceCheck = false
     }
 
     java {
         importOrder()
         formatAnnotations()
         removeUnusedImports()
-        isEnforceCheck = false
     }
 
     kotlin {
@@ -52,7 +51,6 @@ spotless {
             step = "ktlint"
             shortCode = "standard:no-wildcard-imports"
         }
-        isEnforceCheck = false
     }
 }
 
