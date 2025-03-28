@@ -38,8 +38,8 @@ object EventHandler {
 
     @JvmStatic
     fun <T : Event> emit(event: T) {
+        if (event is CancellableEvent) event.cancel = false
         listeners[event.javaClass]?.toList()?.forEach { wrapper ->
-            if (event is CancellableEvent) event.cancel = false
             kotlin.runCatching {
                 wrapper.action(event)
                 if (event is CancellableEvent && event.cancel) return@forEach
