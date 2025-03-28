@@ -12,7 +12,6 @@ import net.minecraft.text.Text
 import java.util.*
 
 object DamageTracker {
-
     init {
         TickEvent.on {
             tick()
@@ -29,12 +28,15 @@ object DamageTracker {
             BossBar.Style.PROGRESS,
             false,
             false,
-            false
+            false,
         )
     }
 
     @JvmStatic
-    fun showDamage(damage: Float, target: LivingEntity) {
+    fun showDamage(
+        damage: Float,
+        target: LivingEntity,
+    ) {
         val healthPercent = (target.health - damage).coerceAtLeast(0f) / target.maxHealth
         bossBar.apply {
             name = Text.literal(String.format("- %.1f", damage))

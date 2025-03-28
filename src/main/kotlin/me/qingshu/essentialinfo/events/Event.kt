@@ -16,21 +16,17 @@ open class SimpleEvent : Event {
 }
 
 inline fun <reified T : Event> T.on(
-    priority: ListenerPriority = ListenerPriority.NORMAL, noinline action: EventHandlerScope<T>.() -> Unit
-): ListenerWrapper {
-    return EventHandler.on(T::class.java, priority, action)
-}
+    priority: ListenerPriority = ListenerPriority.NORMAL,
+    noinline action: EventHandlerScope<T>.() -> Unit,
+): ListenerWrapper = EventHandler.on(T::class.java, priority, action)
 
 inline fun <reified T : Event> T.once(
-    priority: ListenerPriority = ListenerPriority.NORMAL, noinline action: EventHandlerScope<T>.() -> Unit
-): ListenerWrapper {
-    return EventHandler.once(T::class.java, priority, action)
-}
+    priority: ListenerPriority = ListenerPriority.NORMAL,
+    noinline action: EventHandlerScope<T>.() -> Unit,
+): ListenerWrapper = EventHandler.once(T::class.java, priority, action)
 
 fun <T : Event> T.emit(event: T) {
     EventHandler.emit(event)
 }
 
-fun <T : Event> T.emitAndCheckCancel(event: T): Boolean {
-    return EventHandler.emitAndCheckCancel(event)
-}
+fun <T : Event> T.emitAndCheckCancel(event: T): Boolean = EventHandler.emitAndCheckCancel(event)

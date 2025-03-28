@@ -48,8 +48,8 @@ object PlayerAttackTracker {
     @JvmStatic
     fun isLastAttacked(entity: LivingEntity): Boolean {
         if (lastAttackedEntity == -1) return false
-        return entity.id == lastAttackedEntity
-               && System.currentTimeMillis() - lastAttackTime < 1000
+        return entity.id == lastAttackedEntity &&
+            System.currentTimeMillis() - lastAttackTime < 1000
     }
 
     @JvmStatic

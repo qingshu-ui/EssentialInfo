@@ -1,9 +1,13 @@
 {
   "config.essentialinfo.title": "EssentialInfo Config",
+
+  "config.essentialinfo.hotkey": "Hotkey",
+  "config.essentialinfo.hotkey.opengui": "Open GUI",
+  "config.essentialinfo.hotkey.opengui.comment": "Open the GUI",
+
   "config.essentialinfo.general": "General",
   "config.essentialinfo.showDamageBossBar": "Show Damage Boss Bar",
   "config.essentialinfo.showDamageBossBar.comment": "Description for showDamageBossBar",
-
   "config.essentialinfo.displayDuration": "Display Duration (ms)",
   "config.essentialinfo.displayDuration.comment": "Description for showDamageBossBar for Display Duration (ms)"
 }
