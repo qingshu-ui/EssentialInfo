@@ -24,7 +24,7 @@ object PlayerAttackTracker {
             }
         }
 
-        TickEvent.on {
+        TickEvent.Post.on {
             if (!ModConfig.showDamageBossBar) return@on
             val world = mc.world ?: return@on
             val entity = world.getEntityById(lastAttackedEntity) as? LivingEntity

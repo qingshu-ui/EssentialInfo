@@ -13,7 +13,7 @@ import java.util.*
 
 object DamageTracker {
     init {
-        TickEvent.on {
+        TickEvent.Post.on {
             tick()
         }
     }
