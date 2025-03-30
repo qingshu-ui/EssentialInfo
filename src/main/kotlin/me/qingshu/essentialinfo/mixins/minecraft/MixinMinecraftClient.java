@@ -13,9 +13,17 @@ public abstract class MixinMinecraftClient {
 
     @Inject(
             method = "tick",
+            at = @At("HEAD")
+    )
+    private void onTickPre(CallbackInfo ci) {
+        EventHandler.emit(TickEvent.Pre.INSTANCE);
+    }
+
+    @Inject(
+            method = "tick",
             at = @At("TAIL")
     )
-    private void onTick(CallbackInfo ci){
-        EventHandler.emit(TickEvent.INSTANCE);
+    private void onTickPost(CallbackInfo ci) {
+        EventHandler.emit(TickEvent.Post.INSTANCE);
     }
 }
