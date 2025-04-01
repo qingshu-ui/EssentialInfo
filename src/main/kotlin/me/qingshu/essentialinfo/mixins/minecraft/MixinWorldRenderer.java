@@ -1,5 +1,6 @@
 package me.qingshu.essentialinfo.mixins.minecraft;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import me.qingshu.essentialinfo.events.EventHandler;
 import me.qingshu.essentialinfo.events.entity.entity.EntityRenderEvent;
 import me.qingshu.essentialinfo.events.render.RenderAfterWorldEvent;
@@ -30,9 +31,32 @@ public abstract class MixinWorldRenderer {
 
     @Inject(
             method = "render",
-            at = @At("RETURN")
+            at = @At("HEAD")
     )
-    private void onRender(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci) {
-        EventHandler.emit(RenderAfterWorldEvent.get(matrix4f, camera, bufferBuilders.getEntityVertexConsumers()));
+    private void beforeRender(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci) {
+        RenderAfterWorldEvent.get(matrix4f, matrix4f2, camera, bufferBuilders);
+    }
+
+    @ModifyExpressionValue(
+            method = "render",
+            at = @At(
+                    value = "NEW",
+                    target = "net/minecraft/client/util/math/MatrixStack"
+            )
+    )
+    private MatrixStack setMatrixStack(MatrixStack matrixStack) {
+        RenderAfterWorldEvent.setMatrix(matrixStack);
+        return matrixStack;
+    }
+
+    @Inject(
+            method = "render",
+            at = @At(
+                    value = "INVOKE",
+                    target = "Lnet/minecraft/client/render/WorldRenderer;renderChunkDebugInfo(Lnet/minecraft/client/util/math/MatrixStack;Lnet/minecraft/client/render/VertexConsumerProvider;Lnet/minecraft/client/render/Camera;)V"
+            )
+    )
+    private void onChunkDebugRender(RenderTickCounter tickCounter, boolean renderBlockOutline, Camera camera, GameRenderer gameRenderer, LightmapTextureManager lightmapTextureManager, Matrix4f matrix4f, Matrix4f matrix4f2, CallbackInfo ci){
+        EventHandler.emit(RenderAfterWorldEvent.INSTANCE);
     }
 }

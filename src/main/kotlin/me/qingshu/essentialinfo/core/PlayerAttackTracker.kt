@@ -15,12 +15,11 @@ import net.minecraft.client.font.TextRenderer
 import net.minecraft.client.render.Camera
 import net.minecraft.client.render.GameRenderer
 import net.minecraft.client.render.VertexConsumerProvider
+import net.minecraft.client.util.math.MatrixStack
 import net.minecraft.entity.Entity
 import net.minecraft.entity.LivingEntity
-import net.minecraft.text.Text
 import net.minecraft.util.math.MathHelper.lerp
 import net.minecraft.util.math.RotationAxis
-import org.joml.Matrix4f
 import org.lwjgl.opengl.GL11
 import kotlin.math.abs
 import kotlin.math.round
@@ -55,7 +54,7 @@ object PlayerAttackTracker {
         RenderAfterWorldEvent.on(ListenerPriority.LOW) {
             if (!ModConfig.attackParticle.enable) return@on
             for (particle in EntityStates.PARTICLE) {
-                renderParticle(particle, event.camera, event.vertexConsumers)
+                renderParticle(event.matrix, event.bufferBuilders.entityVertexConsumers, particle, event.camera)
             }
         }
         log.info("PlayerAttackTracker initialized.")
@@ -72,9 +71,10 @@ object PlayerAttackTracker {
     // - Java to Kotlin
     // - Update api call
     private fun renderParticle(
+        matrix: MatrixStack,
+        vertexConsumers: VertexConsumerProvider,
         particle: AttackParticle,
         camera: Camera,
-        vertexConsumers: VertexConsumerProvider,
     ) {
         val distanceSquared = camera.pos.squaredDistanceTo(particle.x, particle.y, particle.z)
         if (distanceSquared > ModConfig.attackParticle.distanceSquared) {
@@ -93,19 +93,15 @@ object PlayerAttackTracker {
         val camY = camPos.y
         val camZ = camPos.z
 
-        val modelMatrix =
-            Matrix4f().apply {
-                translate(
-                    (x - camX).toFloat(),
-                    (y - camY).toFloat(),
-                    (z - camZ).toFloat(),
-                )
-
-                rotate(RotationAxis.POSITIVE_Y.rotationDegrees(-camera.yaw))
-                rotate(RotationAxis.POSITIVE_X.rotationDegrees(camera.pitch))
-
-                scale(-scaleToGui, -scaleToGui, scaleToGui)
-            }
+        matrix.push()
+        matrix.translate(
+            (x - camX).toFloat(),
+            (y - camY).toFloat(),
+            (z - camZ).toFloat(),
+        )
+        matrix.multiply(RotationAxis.POSITIVE_Y.rotationDegrees(-camera.yaw))
+        matrix.multiply(RotationAxis.POSITIVE_X.rotationDegrees(camera.pitch))
+        matrix.scale(-scaleToGui, -scaleToGui, scaleToGui)
 
         RenderSystem.setShader(GameRenderer::getPositionColorProgram)
         RenderSystem.enableDepthTest()
@@ -118,11 +114,12 @@ object PlayerAttackTracker {
         )
 
         drawDamageNumber(
-            modelMatrix,
+            matrix,
             vertexConsumers,
             particle.damage,
         )
         RenderSystem.disableBlend()
+        matrix.pop()
     }
 
     // Copyright (c) 2020 ToroHealth
@@ -136,16 +133,16 @@ object PlayerAttackTracker {
     // - Java to Kotlin
     // - Update api call
     private fun drawDamageNumber(
-        matrix: Matrix4f,
+        matrix: MatrixStack,
         vertexConsumers: VertexConsumerProvider,
         damage: Float,
         x: Double = 0.0,
         y: Double = 0.0,
         width: Double = 10.0,
-        light: Int = 15,
+        light: Int = 15728880,
     ) {
         if (abs(round(damage)) == 0f) return
-        val dmgText = Text.literal(if (damage < 0) "+ %.1f".format(-damage) else "- %.1f".format(damage))
+        val dmgText = if (damage < 0) "+ %.1f".format(-damage) else "- %.1f".format(damage)
         val color = if (damage < 0) ModConfig.attackParticle.healColor else ModConfig.attackParticle.damageColor
         val sw = mc.textRenderer.getWidth(dmgText)
         mc.textRenderer.draw(
@@ -154,7 +151,7 @@ object PlayerAttackTracker {
             (y + 5).toFloat(),
             color,
             false,
-            matrix,
+            matrix.peek().positionMatrix,
             vertexConsumers,
             TextRenderer.TextLayerType.SEE_THROUGH,
             0,
