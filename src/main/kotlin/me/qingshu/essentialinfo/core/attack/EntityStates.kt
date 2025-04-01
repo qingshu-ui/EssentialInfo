@@ -1,6 +1,7 @@
 package me.qingshu.essentialinfo.core.attack
 
 import me.qingshu.essentialinfo.client.EssentialinfoClient.Companion.mc
+import me.qingshu.essentialinfo.config.ModConfig
 import me.qingshu.essentialinfo.events.entity.entity.EntityRenderEvent
 import me.qingshu.essentialinfo.events.on
 import me.qingshu.essentialinfo.events.world.TickEvent
@@ -25,7 +26,7 @@ object EntityStates {
         EntityRenderEvent.on {
             val entity = event.entity as? LivingEntity ?: return@on
             if (!shouldDisplay(entity)) return@on
-            if (entity.distanceTo(mc.cameraEntity) > 60f) return@on
+            if (entity.distanceTo(mc.cameraEntity) > ModConfig.attackParticle.distance) return@on
             getState(entity)
         }
         TickEvent.Pre.on { tick() }

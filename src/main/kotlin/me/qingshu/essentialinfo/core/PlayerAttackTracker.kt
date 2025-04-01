@@ -153,7 +153,7 @@ object PlayerAttackTracker {
             false,
             matrix.peek().positionMatrix,
             vertexConsumers,
-            TextRenderer.TextLayerType.SEE_THROUGH,
+            TextRenderer.TextLayerType.NORMAL,
             0,
             light,
         )
