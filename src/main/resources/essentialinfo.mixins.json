@@ -11,7 +11,8 @@
     "MixinClientPlayerInteractionManager",
     "MixinInGameHud",
     "MixinKeyBoard",
-    "MixinMinecraftClient"
+    "MixinMinecraftClient",
+    "MixinWorldRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

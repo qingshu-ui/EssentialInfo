@@ -9,5 +9,14 @@
   "config.essentialinfo.showDamageBossBar": "伤害显示",
   "config.essentialinfo.showDamageBossBar.comment": "启用或关闭",
   "config.essentialinfo.displayDuration": "显示时长 (ms)",
-  "config.essentialinfo.displayDuration.comment": "BossBar显示时长"
+  "config.essentialinfo.displayDuration.comment": "BossBar显示时长",
+  "config.essentialinfo.attackParticle": "伤害数字",
+  "config.essentialinfo.attackParticle.enable": "启用",
+  "config.essentialinfo.attackParticle.enable.comment": "开启伤害数字显示",
+  "config.essentialinfo.attackParticle.damageColor": "伤害颜色",
+  "config.essentialinfo.attackParticle.damageColor.comment": "造成伤害的的数字颜色",
+  "config.essentialinfo.attackParticle.healColor": "治疗颜色",
+  "config.essentialinfo.attackParticle.healColor.comment": "治疗回血的颜色，默认绿色，伤害较低时显示此颜色",
+  "config.essentialinfo.attackParticle.distance": "距离",
+  "config.essentialinfo.attackParticle.distance.comment": "显示距离，超过距离的不显示"
 }

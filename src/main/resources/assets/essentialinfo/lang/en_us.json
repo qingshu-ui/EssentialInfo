@@ -9,5 +9,14 @@
   "config.essentialinfo.showDamageBossBar": "Show Damage Boss Bar",
   "config.essentialinfo.showDamageBossBar.comment": "Description for showDamageBossBar",
   "config.essentialinfo.displayDuration": "Display Duration (ms)",
-  "config.essentialinfo.displayDuration.comment": "Description for showDamageBossBar for Display Duration (ms)"
+  "config.essentialinfo.displayDuration.comment": "Description for showDamageBossBar for Display Duration (ms)",
+  "config.essentialinfo.attackParticle": "Attack Particle",
+  "config.essentialinfo.attackParticle.enable": "Enable",
+  "config.essentialinfo.attackParticle.enable.comment": "Enable attack number",
+  "config.essentialinfo.attackParticle.damageColor": "Damage Color",
+  "config.essentialinfo.attackParticle.damageColor.comment": "Damage Color",
+  "config.essentialinfo.attackParticle.healColor": "Heal Color",
+  "config.essentialinfo.attackParticle.healColor.comment": "Heal Color",
+  "config.essentialinfo.attackParticle.distance": "Distance",
+  "config.essentialinfo.attackParticle.distance.comment": "Distance"
 }

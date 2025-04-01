@@ -3,6 +3,15 @@ package me.qingshu.essentialinfo.integrations
 import com.terraformersmc.modmenu.api.ConfigScreenFactory
 import com.terraformersmc.modmenu.api.ModMenuApi
 import me.qingshu.essentialinfo.config.ModConfig
+import me.qingshu.essentialinfo.config.TransKey.KEY_ATTACK_PARTICLE
+import me.qingshu.essentialinfo.config.TransKey.KEY_ATTACK_PARTICLE_DAMAGE_COLOR
+import me.qingshu.essentialinfo.config.TransKey.KEY_ATTACK_PARTICLE_DAMAGE_COLOR_COMMENT
+import me.qingshu.essentialinfo.config.TransKey.KEY_ATTACK_PARTICLE_DISTANCE
+import me.qingshu.essentialinfo.config.TransKey.KEY_ATTACK_PARTICLE_DISTANCE_COMMENT
+import me.qingshu.essentialinfo.config.TransKey.KEY_ATTACK_PARTICLE_ENABLE
+import me.qingshu.essentialinfo.config.TransKey.KEY_ATTACK_PARTICLE_ENABLE_COMMENT
+import me.qingshu.essentialinfo.config.TransKey.KEY_ATTACK_PARTICLE_HEAL_COLOR
+import me.qingshu.essentialinfo.config.TransKey.KEY_ATTACK_PARTICLE_HEAL_COLOR_COMMENT
 import me.qingshu.essentialinfo.config.TransKey.KEY_CONFIG_TITLE
 import me.qingshu.essentialinfo.config.TransKey.KEY_DISPLAY_DURATION
 import me.qingshu.essentialinfo.config.TransKey.KEY_DISPLAY_DURATION_COMMENT
@@ -75,6 +84,49 @@ private fun generalConfig(builder: ConfigBuilder) {
                 setSaveConsumer { newValue -> ModConfig.displayDuration = newValue }
             },
     )
+
+    val attackParticleCategory = entryBuilder.startSubCategory(Text.translatable(KEY_ATTACK_PARTICLE))
+    attackParticleCategory.add(
+        entryBuilder
+            .startBooleanToggle(Text.translatable(KEY_ATTACK_PARTICLE_ENABLE), ModConfig.attackParticle.enable)
+            .build {
+                setDefaultValue(true)
+                setTooltip(Text.translatable(KEY_ATTACK_PARTICLE_ENABLE_COMMENT))
+                setSaveConsumer { newValue -> ModConfig.attackParticle.enable = newValue }
+            },
+    )
+    attackParticleCategory.add(
+        entryBuilder
+            .startColorField(
+                Text.translatable(KEY_ATTACK_PARTICLE_DAMAGE_COLOR),
+                ModConfig.attackParticle.damageColor,
+            ).build {
+                setDefaultValue(0xff0000)
+                setTooltip(Text.translatable(KEY_ATTACK_PARTICLE_DAMAGE_COLOR_COMMENT))
+                setSaveConsumer { newValue -> ModConfig.attackParticle.damageColor = newValue }
+            },
+    )
+    attackParticleCategory.add(
+        entryBuilder
+            .startColorField(
+                Text.translatable(KEY_ATTACK_PARTICLE_HEAL_COLOR),
+                ModConfig.attackParticle.healColor,
+            ).build {
+                setDefaultValue(0x00ff00)
+                setTooltip(Text.translatable(KEY_ATTACK_PARTICLE_HEAL_COLOR_COMMENT))
+                setSaveConsumer { newValue -> ModConfig.attackParticle.healColor = newValue }
+            },
+    )
+    attackParticleCategory.add(
+        entryBuilder
+            .startIntField(Text.translatable(KEY_ATTACK_PARTICLE_DISTANCE), ModConfig.attackParticle.distance)
+            .build {
+                setDefaultValue(60)
+                setTooltip(Text.translatable(KEY_ATTACK_PARTICLE_DISTANCE_COMMENT))
+                setSaveConsumer { newValue -> ModConfig.attackParticle.distance = newValue }
+            },
+    )
+    general.addEntry(attackParticleCategory.build())
 }
 
 private fun hotkeyConfig(builder: ConfigBuilder) {
