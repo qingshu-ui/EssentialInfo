@@ -4,7 +4,6 @@ import me.qingshu.essentialinfo.events.SimpleEvent
 import net.minecraft.client.gui.DrawContext
 
 object Render2DEvent : SimpleEvent() {
-
     @JvmStatic
     var drawContext: DrawContext? = null
 
