@@ -6,7 +6,6 @@ plugins {
     kotlin("plugin.serialization") version "2.1.20"
     id("fabric-loom") version "1.10-SNAPSHOT"
     id("maven-publish")
-    id("com.diffplug.spotless") version "7.0.2"
 }
 
 version = project.property("mod_version") as String
@@ -26,31 +25,6 @@ sourceSets {
     main {
         java.srcDirs("src/main/kotlin")
         kotlin.srcDirs("src/main/kotlin")
-    }
-}
-
-spotless {
-
-    format("miss") {
-        target("*.gradle.kts", ".gitattributes", ".gitignore", "*.properties")
-        trimTrailingWhitespace()
-        leadingTabsToSpaces()
-        endWithNewline()
-        replaceRegex("Add spaces around = ", """(\w)\s*=\s*(\w)""", "$1 = $2")
-    }
-
-    java {
-        importOrder()
-        formatAnnotations()
-        removeUnusedImports()
-    }
-
-    kotlin {
-        ktlint()
-        suppressLintsFor {
-            step = "ktlint"
-            shortCode = "standard:no-wildcard-imports"
-        }
     }
 }
 

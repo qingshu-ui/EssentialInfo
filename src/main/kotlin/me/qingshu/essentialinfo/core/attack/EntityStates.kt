@@ -32,16 +32,18 @@ object EntityStates {
         TickEvent.Pre.on { tick() }
     }
 
-    private fun shouldDisplay(entity: LivingEntity): Boolean =
-        entity !is ArmorStandEntity &&
-            !entity.isInvisibleTo(mc.player) ||
-            entity.isGlowing ||
-            entity.isOnFire ||
-            entity is CreeperEntity &&
-            entity.shouldRenderOverlay() ||
-            entity.equippedItems.any { !it.isEmpty } &&
-            entity != mc.player &&
-            !entity.isSpectator
+    // @formatter:off
+    private fun shouldDisplay(entity: LivingEntity): Boolean {
+        return entity !is ArmorStandEntity
+               && (!entity.isInvisibleTo(mc.player)
+                   || entity.isGlowing
+                   || entity.isOnFire
+                   || (entity is CreeperEntity && entity.shouldRenderOverlay())
+                   || entity.equippedItems.any { !it.isEmpty })
+               && entity != mc.player
+               && !entity.isSpectator
+    }
+    // @formatter:on
 
     val PARTICLE = ArrayList<AttackParticle>()
     private val STATES: HashMap<Int, EntityState> = hashMapOf()
