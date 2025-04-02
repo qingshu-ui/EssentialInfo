@@ -1,1 +1,3 @@
-一个简单的伤害显示mod
+EssentialInfo
+
+A mod that displays the number of damage dealt by the player
