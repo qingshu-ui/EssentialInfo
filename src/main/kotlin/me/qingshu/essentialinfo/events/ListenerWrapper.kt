@@ -6,7 +6,7 @@ class ListenerWrapper(
 ) : Comparable<ListenerWrapper> {
     var unregister: (() -> Boolean)? = null
 
-    override fun compareTo(other: ListenerWrapper): Int = other.priority.ordinal - this.priority.ordinal
+    override fun compareTo(other: ListenerWrapper): Int = this.priority.ordinal - other.priority.ordinal
 
     fun off(): Boolean = unregister?.invoke() ?: false
 }

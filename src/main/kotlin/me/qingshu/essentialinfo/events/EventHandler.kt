@@ -23,7 +23,7 @@ object EventHandler {
             object : EventHandlerScope<T> {
                 @Suppress("UNCHECKED_CAST")
                 override val event: T = e as T
-            }.run(action)
+            }.action()
         }.apply {
             unregister = { c.remove(this) }
         }
