@@ -13,11 +13,9 @@ data class AttackParticle(
     var damageColor: Int = 0xff0000,
     var healColor: Int = 0x00ff00,
     var distance: Int = 60,
-    var distanceSquared: Int = 0,
 ) {
-    init {
-        distanceSquared = distance * distance
-    }
+    val distanceSquared
+        get() = distance * distance
 }
 
 @Serializable
@@ -34,6 +32,7 @@ data class ModConfigData(
             Json {
                 prettyPrint = true
                 ignoreUnknownKeys = true
+                encodeDefaults = true
             }
 
         fun load(): ModConfigData {
