@@ -28,8 +28,7 @@ object KeyEvent : CancellableEvent() {
     enum class KeyAction {
         Press,
         Repeat,
-        Release,
-        ;
+        Release;
 
         companion object {
             @JvmStatic

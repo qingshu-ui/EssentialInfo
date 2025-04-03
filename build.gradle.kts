@@ -2,17 +2,17 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "2.1.20"
-    kotlin("plugin.serialization") version "2.1.20"
-    id("fabric-loom") version "1.10-SNAPSHOT"
-    id("maven-publish")
+    alias(libs.plugins.kotlin.jvm)
+    alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.fabric.loom)
+    alias(libs.plugins.maven.publish)
 }
 
-version = project.property("mod_version") as String
-group = project.property("maven_group") as String
+version = libs.versions.mod.version.get()
+group = libs.versions.maven.group.get()
 
 base {
-    archivesName.set(project.property("archives_base_name") as String)
+    archivesName.set(libs.versions.archives.base.name.get())
 }
 
 val targetJavaVersion = 21
@@ -35,24 +35,24 @@ repositories {
 }
 
 dependencies {
-    minecraft("com.mojang:minecraft:${project.property("minecraft_version")}")
-    mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
-    modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
-    modImplementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
-    modCompileOnly("com.terraformersmc:modmenu:${project.property("modmenu_version")}")
-    modApi("me.shedaniel.cloth:cloth-config-fabric:${project.property("cloth_config_version")}") {
+    minecraft(libs.minecraft)
+    mappings("${libs.yarn.mappings.get()}:v2")
+    modImplementation(libs.fabric.loader)
+    modImplementation(libs.fabric.language.kotlin)
+    modCompileOnly(libs.modmenu)
+    modApi(libs.cloth.config.fabric) {
         exclude(group = "net.fabricmc.fabric-api")
     }
 }
 
 tasks.processResources {
     val propertyMap = mapOf(
-        "version" to project.version,
-        "minecraft_version" to project.property("minecraft_version"),
-        "loader_version" to project.property("loader_version"),
-        "kotlin_loader_version" to project.property("kotlin_loader_version"),
-        "modmenu_version" to project.property("modmenu_version"),
-        "cloth_config_version" to project.property("cloth_config_version")
+        "version" to version,
+        "minecraft_version" to libs.versions.minecraft.get(),
+        "loader_version" to libs.versions.loader.get(),
+        "kotlin_loader_version" to libs.versions.kotlin.loader.get(),
+        "modmenu_version" to libs.versions.modmenu.get(),
+        "cloth_config_version" to libs.versions.cloth.config.get(),
     )
     inputs.properties(propertyMap)
     filteringCharset = "UTF-8"
@@ -73,14 +73,14 @@ tasks.withType<KotlinCompile>().configureEach {
 
 tasks.jar {
     from("LICENSE") {
-        rename { "${it}_${project.base.archivesName}" }
+        rename { "${it}_${base.archivesName.get()}" }
     }
 }
 
 publishing {
     publications {
         create<MavenPublication>("mavenJava") {
-            artifactId = project.property("archives_base_name") as String
+            artifactId = base.archivesName.get()
             from(components["java"])
         }
     }
